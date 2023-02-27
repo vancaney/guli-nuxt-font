@@ -9,29 +9,36 @@ export default{
     },
     getTeacherList(teacherQuery){
         return request({
-            url: `/teacherFont/getTeacherListFont`,
+            url: `/indexFont/getTeacherListFont`,
             method: 'post',
             data: teacherQuery
         })
     },
     getTeacherInfoById(id){
         return request({
-            url: `teacherFont/getTeacherInfoById/${id}`,
+            url: `indexFont/getTeacherInfoById/${id}`,
             method: 'get',
             data: id
         })
     },
     getCourseListFont(courseQuery){
         return request({
-            url: `/teacherFont/getCourseListFont`,
+            url: `/indexFont/getCourseListFont`,
             method: 'post',
             data: courseQuery
         })
     },
     getSubjectOneLevelAndTwoLevel(){
         return request({
-            url: `/teacherFont/getSubjectOneLevelAndTwoLevel`,
+            url: `/indexFont/getSubjectOneLevelAndTwoLevel`,
             method: 'get'
+        })
+    },
+    getCourseInfoFont(courseId){
+        return request({
+            url: `/indexFont/getCourseInfoFont/${courseId}`,
+            method: 'get',
+            data: courseId
         })
     }
 }
