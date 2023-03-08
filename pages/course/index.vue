@@ -132,6 +132,7 @@
                       :src="course.cover"
                       class="img-responsive"
                       :alt="course.title"
+                      style="width: 360px; height: 185px"
                     />
                     <div class="cc-mask">
                       <a
@@ -144,8 +145,8 @@
                   </section>
                   <h3 class="hLh30 txtOf mt10">
                     <a
-                      href="/course/1"
-                      :title="data.title"
+                      :href="'/course/' + course.id"
+                      :title="course.title"
                       class="course-title fsize18 c-333"
                       >{{ course.title }}</a
                     >

@@ -128,7 +128,7 @@
 <script>
 import banner from '@/api/banner'
 import index from '@/api/index'
-
+import cookie from "js-cookie";
 export default {
   data () {
     return {

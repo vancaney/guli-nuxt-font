@@ -46,8 +46,26 @@
                 <a class="c-fff vam" title="收藏" href="#">收藏</a>
               </span>
             </section>
-            <section class="c-attr-mt">
-              <a href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
+
+            <section
+              class="c-attr-mt"
+              v-if="courseWebVo.price === 0 || isBuy === true"
+            >
+              <a
+                @click="createOrders()"
+                title="立即观看"
+                class="comm-btn c-btn-3"
+                >立即观看</a
+              >
+            </section>
+
+            <section class="c-attr-mt" v-else>
+              <a
+                @click="createOrders()"
+                title="立即购买"
+                class="comm-btn c-btn-3"
+                >立即购买</a
+              >
             </section>
           </section>
         </aside>
@@ -208,9 +226,37 @@
 
 <script>
 import indexApi from "@/api/index";
+import orderApi from "@/api/order";
+
 export default {
-  data() {},
-  methods: {},
+  data() {
+    return {
+      isBuy: false,
+    };
+  },
+  methods: {
+    createOrders() {
+      orderApi
+        .saveOrder(this.courseId)
+        .then((res) => {
+          if (res.data.code === 20001) {
+            this.$message({
+              type: "error",
+              message: res.data.message,
+            });
+          } else this.$router.push({ path: "/order/" + res.data.data.orderNo });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    checkCourseStatus() {
+      orderApi.getCourseStatus(this.courseId).then((res) => {
+        this.isBuy = res.data.data.isBuy;
+        console.log(this.isBuy);
+      });
+    },
+  },
   asyncData({ params, error }) {
     return indexApi
       .getCourseInfoFont(params.id)
@@ -219,12 +265,15 @@ export default {
         return {
           courseWebVo: response.data.data.courseWebVo,
           eduChapterList: response.data.data.eduChapterList,
+          courseId: params.id,
         };
       })
       .catch((error) => {
         console.log(error);
       });
   },
-  mounted: function () {},
+  mounted: function () {
+    this.checkCourseStatus();
+  },
 };
 </script>
